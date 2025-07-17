@@ -32,4 +32,7 @@ void	rra(t_stack *stack_a);
 void	rrb(t_stack *stack_b);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
 
+/* Interactive mode */
+void	interactive_mode(t_stack *stack_a, t_stack *stack_b);
+
 #endif

@@ -53,7 +53,8 @@ int	main(int argc, char **argv)
 	
 	// TODO: Implement push_swap algorithm here
 	// For now, stack_a contains all numbers, stack_b is empty
-	
+	// To enable interactive mode, call: interactive_mode(stack_a, stack_b);
+
 	// Clean up
 	free_stack(stack_a);
 	free_stack(stack_b);
