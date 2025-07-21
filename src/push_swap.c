@@ -51,9 +51,8 @@ int	main(int argc, char **argv)
 	ft_printf("Initial state:\n");
 	print_stacks(stack_a, stack_b);
 	
-	// TODO: Implement push_swap algorithm here
-	// For now, stack_a contains all numbers, stack_b is empty
-	// To enable interactive mode, call: interactive_mode(stack_a, stack_b);
+	// Uncomment to enable interactive mode for testing
+	// interactive_mode(stack_a, stack_b);
 
 	// Clean up
 	free_stack(stack_a);
