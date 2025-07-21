@@ -37,5 +37,6 @@ void	interactive_mode(t_stack *stack_a, t_stack *stack_b);
 
 /* Algorithm functions */
 int		is_sorted(t_stack *stack_a);
+void	sort_two(t_stack *stack_a);
 
 #endif
