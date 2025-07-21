@@ -35,4 +35,7 @@ void	rrr(t_stack *stack_a, t_stack *stack_b);
 /* Interactive mode */
 void	interactive_mode(t_stack *stack_a, t_stack *stack_b);
 
+/* Algorithm functions */
+int		is_sorted(t_stack *stack_a);
+
 #endif
