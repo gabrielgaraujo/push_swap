@@ -16,3 +16,15 @@ int	is_sorted(t_stack *stack_a)
 	}
 	return (1);
 }
+
+/* Sort 2 elements: if top > bottom, swap them */
+void	sort_two(t_stack *stack_a)
+{
+	if (stack_a->size != 2)
+		return;
+	
+	// Check if top element is greater than bottom element
+	// Remember: stack_a->data[stack_a->size - 1] is the top (last pushed)
+	if (stack_a->data[1] > stack_a->data[0])
+		sa(stack_a);
+}
