@@ -1,5 +1,8 @@
 #include "../includes/push_swap.h"
 
+/* Global operation counter */
+int	g_operation_count = 0;
+
 int	count_numbers(char **numbers)
 {
 	int	count;
@@ -83,4 +86,25 @@ void	print_stacks(t_stack *stack_a, t_stack *stack_b)
 	}
 	ft_printf("-------\t\t-------\n");
 	ft_printf("   a\t\t   b\n\n");
+}
+
+/* Operation counter functions */
+void	reset_operation_count(void)
+{
+	g_operation_count = 0;
+}
+
+void	increment_operation_count(void)
+{
+	g_operation_count++;
+}
+
+int	get_operation_count(void)
+{
+	return (g_operation_count);
+}
+
+void	print_operation_count(void)
+{
+	ft_printf("Total operations performed: %d\n", g_operation_count);
 }
