@@ -10,6 +10,7 @@ void	sa(t_stack *stack_a)
 	temp = stack_a->data[stack_a->size - 1];
 	stack_a->data[stack_a->size - 1] = stack_a->data[stack_a->size - 2];
 	stack_a->data[stack_a->size - 2] = temp;
+	increment_operation_count();
 	ft_printf("sa\n");
 }
 
@@ -23,6 +24,7 @@ void	sb(t_stack *stack_b)
 	temp = stack_b->data[stack_b->size - 1];
 	stack_b->data[stack_b->size - 1] = stack_b->data[stack_b->size - 2];
 	stack_b->data[stack_b->size - 2] = temp;
+	increment_operation_count();
 	ft_printf("sb\n");
 }
 
@@ -65,6 +67,7 @@ void	pb(t_stack *stack_a, t_stack *stack_b)
 	stack_b->data[stack_b->size] = stack_a->data[stack_a->size - 1];
 	stack_b->size++;
 	stack_a->size--;
+	increment_operation_count();
 	ft_printf("pb\n");
 }
 
@@ -84,6 +87,7 @@ void	ra(t_stack *stack_a)
 		i--;
 	}
 	stack_a->data[0] = temp;
+	increment_operation_count();
 	ft_printf("ra\n");
 }
 
@@ -153,6 +157,7 @@ void	rra(t_stack *stack_a)
 		i++;
 	}
 	stack_a->data[stack_a->size - 1] = temp;
+	increment_operation_count();
 	ft_printf("rra\n");
 }
 
