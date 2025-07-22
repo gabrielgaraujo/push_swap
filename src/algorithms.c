@@ -23,8 +23,51 @@ void	sort_two(t_stack *stack_a)
 	if (stack_a->size != 2)
 		return;
 	
-	// Check if top element is greater than bottom element
-	// Remember: stack_a->data[stack_a->size - 1] is the top (last pushed)
-	if (stack_a->data[1] > stack_a->data[0])
+	// We know it's not sorted (checked in main), so just swap
+	sa(stack_a);
+}
+
+/* Sort 3 elements using optimal operations */
+void	sort_three(t_stack *stack_a)
+{
+	int	top;
+	int	mid;
+	int	bot;
+
+	if (stack_a->size != 3)
+		return;
+	
+	// Get the three elements: top, middle, bottom
+	top = stack_a->data[2];  // stack_a->data[stack_a->size - 1]
+	mid = stack_a->data[1];  // stack_a->data[stack_a->size - 2]
+	bot = stack_a->data[0];  // stack_a->data[stack_a->size - 3]
+	
+	// Case analysis for 3 elements (we know it's not sorted)
+	if (top < mid && mid > bot && top < bot)
+	{
+		// Pattern: top < bot < mid (e.g., 1 3 2)
 		sa(stack_a);
+		ra(stack_a);
+	}
+	else if (top > mid && mid < bot && top < bot)
+	{
+		// Pattern: mid < top < bot (e.g., 2 1 3)
+		sa(stack_a);
+	}
+	else if (top < mid && mid > bot && top > bot)
+	{
+		// Pattern: bot < top < mid (e.g., 2 3 1)
+		rra(stack_a);
+	}
+	else if (top > mid && mid < bot && top > bot)
+	{
+		// Pattern: mid < bot < top (e.g., 3 1 2)
+		ra(stack_a);
+	}
+	else if (top > mid && mid > bot)
+	{
+		// Pattern: bot < mid < top (e.g., 3 2 1) - reverse sorted
+		sa(stack_a);
+		rra(stack_a);
+	}
 }
