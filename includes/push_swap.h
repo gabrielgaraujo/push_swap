@@ -19,6 +19,13 @@ void	free_stack(t_stack *stack);
 int		populate_stack_a(t_stack *stack_a, char **numbers);
 void	print_stacks(t_stack *stack_a, t_stack *stack_b);
 
+/* Operation counter functions */
+extern int	g_operation_count;
+void	reset_operation_count(void);
+void	increment_operation_count(void);
+int		get_operation_count(void);
+void	print_operation_count(void);
+
 /* Push_swap operations */
 void	sa(t_stack *stack_a);
 void	sb(t_stack *stack_b);
@@ -38,5 +45,6 @@ void	interactive_mode(t_stack *stack_a, t_stack *stack_b);
 /* Algorithm functions */
 int		is_sorted(t_stack *stack_a);
 void	sort_two(t_stack *stack_a);
+void	sort_three(t_stack *stack_a);
 
 #endif
