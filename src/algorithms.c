@@ -71,3 +71,34 @@ void	sort_three(t_stack *stack_a)
 		rra(stack_a);
 	}
 }
+
+/* Sort 4 elements using optimal strategy */
+void	sort_four(t_stack *stack_a, t_stack *stack_b)
+{
+	int	min_pos;
+
+	if (stack_a->size != 4)
+		return;
+	
+	// Find position of minimum value and move it to top
+	min_pos = get_min_position(stack_a);
+	move_index_to_top(stack_a, min_pos, 'a');
+	
+	// Push minimum to stack B
+	pb(stack_a, stack_b);
+	
+	// Sort remaining 3 elements in stack A
+	if (!is_sorted(stack_a))
+		sort_three(stack_a);
+	
+	// Push minimum back to stack A (it will be at the top, which is correct)
+	pa(stack_a, stack_b);
+}
+
+/* General sorting algorithm for 5+ elements (placeholder) */
+void	sort_large(t_stack *stack_a, t_stack *stack_b)
+{
+	(void)stack_a;
+	(void)stack_b;
+	// TODO: Implement sorting algorithm for large stacks
+}

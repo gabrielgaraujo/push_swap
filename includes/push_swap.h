@@ -48,6 +48,7 @@ void	interactive_mode(t_stack *stack_a, t_stack *stack_b);
 int		is_sorted(t_stack *stack_a);
 void	sort_two(t_stack *stack_a);
 void	sort_three(t_stack *stack_a);
+void	sort_four(t_stack *stack_a, t_stack *stack_b);
 void	sort_large(t_stack *stack_a, t_stack *stack_b);
 
 #endif
