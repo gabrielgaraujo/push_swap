@@ -16,7 +16,6 @@ int	is_sorted(t_stack *stack_a)
 			return (0);
 		i++;
 	}
-	ft_printf("Stack is sorted\n");
 	return (1);
 }
 
