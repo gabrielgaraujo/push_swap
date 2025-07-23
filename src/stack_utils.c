@@ -151,8 +151,8 @@ void	move_index_to_top(t_stack *stack, int index, char stack_name)
 		return;
 	
 	// Calculate moves needed in each direction
-	moves_up = stack->size - index;     // rotations needed (ra/rb)
-	moves_down = index;                 // reverse rotations needed (rra/rrb)
+	moves_up = (stack->size - 1) - index;  // rotations needed (ra/rb) to reach top
+	moves_down = index + 1;                 // reverse rotations needed (rra/rrb)
 	
 	// Choose the most efficient direction
 	if (moves_up <= moves_down)
