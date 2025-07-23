@@ -46,12 +46,12 @@ int	populate_stack_a(t_stack *stack_a, char **numbers)
 	int	i;
 	int	num;
 
-	// Populate in regular order
+	// Populate in natural order: first argument goes to data[0]
 	i = 0;
 	while (numbers[i])
 	{
 		num = ft_atoi(numbers[i]);
-		stack_a->data[i] = num;  // Store in regular order
+		stack_a->data[i] = num;  // Store in natural order
 		stack_a->size++;
 		i++;
 	}
@@ -70,20 +70,20 @@ void	print_stacks(t_stack *stack_a, t_stack *stack_b)
 	ft_printf("Stack A\t\tStack B\n");
 	ft_printf("-------\t\t-------\n");
 	
-	i = max_size - 1;
-	while (i >= 0)
+	i = 0;
+	while (i < max_size)
 	{
 		if (i < stack_a->size)
-			ft_printf("%d\t\t", stack_a->data[i]);
+			ft_printf("%d\t\t", stack_a->data[i]);  // data[0] at top
 		else
 			ft_printf(" \t\t");
 		
 		if (i < stack_b->size)
-			ft_printf("%d\n", stack_b->data[i]);
+			ft_printf("%d\n", stack_b->data[i]);  // data[0] at top
 		else
 			ft_printf(" \n");
 		
-		i--;
+		i++;
 	}
 	ft_printf("-------\t\t-------\n");
 	ft_printf("   a\t\t   b\n\n");
@@ -120,7 +120,7 @@ int	get_min_position(t_stack *stack)
 	if (stack->size == 0)
 		return (-1);
 	
-	min_value = stack->data[0];
+	min_value = stack->data[0];  // Start from top of stack (data[0])
 	min_position = 0;
 	
 	i = 1;
@@ -147,8 +147,10 @@ void	move_index_to_top(t_stack *stack, int index, char stack_name)
 		return;
 	
 	// Calculate moves needed in each direction
-	moves_up = (stack->size - 1) - index;  // rotations needed (ra/rb) to reach top
-	moves_down = index + 1;                 // reverse rotations needed (rra/rrb)
+	// moves_up: rotations needed (ra/rb) to bring element to top (data[0])
+	moves_up = index;  // element at data[index] needs 'index' rotations to reach data[0]
+	// moves_down: reverse rotations needed (rra/rrb) to bring element to top
+	moves_down = stack->size - index;  // reverse rotations from bottom
 	
 	// Choose the most efficient direction
 	if (moves_up <= moves_down)
@@ -205,10 +207,6 @@ char	*reconstruct_args(int argc, char **argv)
 		if (!result)
 			return (NULL);
 		i++;
-	}
-	
-	return (result);
-}
 	}
 	
 	return (result);

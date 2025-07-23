@@ -7,12 +7,14 @@ int	is_sorted(t_stack *stack_a)
 
 	if (stack_a->size <= 1)
 		return (1);
-	i = stack_a->size - 1;
-	while (i > 0)
+	
+	// Check from top to bottom (data[0] to data[size-1])
+	i = 0;
+	while (i < stack_a->size - 1)
 	{
-		if (stack_a->data[i] > stack_a->data[i - 1])
+		if (stack_a->data[i] > stack_a->data[i + 1])
 			return (0);
-		i--;
+		i++;
 	}
 	return (1);
 }
@@ -37,10 +39,10 @@ void	sort_three(t_stack *stack_a)
 	if (stack_a->size != 3)
 		return;
 	
-	// Get the three elements: top, middle, bottom
-	top = stack_a->data[2];  // stack_a->data[stack_a->size - 1]
-	mid = stack_a->data[1];  // stack_a->data[stack_a->size - 2]
-	bot = stack_a->data[0];  // stack_a->data[stack_a->size - 3]
+	// Get the three elements: data[0] is top, data[2] is bottom
+	top = stack_a->data[0];  // Top of stack (data[0])
+	mid = stack_a->data[1];  // Middle of stack (data[1])
+	bot = stack_a->data[2];  // Bottom of stack (data[2])
 	
 	// Case analysis for 3 elements (we know it's not sorted)
 	if (top < mid && mid > bot && top < bot)
