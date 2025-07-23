@@ -31,6 +31,22 @@ t_stack	*init_stack(int capacity)
 	return (stack);
 }
 
+int	populate_stack_a(int argc, char **argv, t_stack *stack_a)
+{
+	int	i;
+	int	num;
+
+	i = 1; // Start from 1 to skip program name
+	while (i < argc)  // argc includes program name
+	{
+		num = ft_atoi(argv[i]);
+		stack_a->data[i - 1] = num;  // Store in natural order
+		stack_a->size++;
+		i++;
+	}
+	return (1);
+}
+
 void	free_stack(t_stack *stack)
 {
 	if (stack)
@@ -39,23 +55,6 @@ void	free_stack(t_stack *stack)
 			free(stack->data);
 		free(stack);
 	}
-}
-
-int	populate_stack_a(t_stack *stack_a, char **numbers)
-{
-	int	i;
-	int	num;
-
-	// Populate in natural order: first argument goes to data[0]
-	i = 0;
-	while (numbers[i])
-	{
-		num = ft_atoi(numbers[i]);
-		stack_a->data[i] = num;  // Store in natural order
-		stack_a->size++;
-		i++;
-	}
-	return (1);
 }
 
 void	print_stacks(t_stack *stack_a, t_stack *stack_b)
@@ -212,4 +211,12 @@ char	*reconstruct_args(int argc, char **argv)
 	return (result);
 }
 
-
+int	validate_input(char *input)
+{
+	if (!input) 
+		return (0);
+	
+	// TODO: Add actual validation logic
+		
+	return (1);
+}
