@@ -47,46 +47,22 @@ int	main(int argc, char **argv)
 	// Populate stack A with the numbers
 	populate_stack_a(stack_a, numbers);
 	
-	// Print initial state of stacks
-	ft_printf("Initial state:\n");
-	print_stacks(stack_a, stack_b);
-	
 	// Reset operation counter
 	reset_operation_count();
 	
 	// Check if already sorted first
-	if (is_sorted(stack_a))
-	{
-		ft_printf("Stack is already sorted!\n");
-	}
-	else
+	if (!is_sorted(stack_a))
 	{
 		// Apply appropriate sorting algorithm based on size
 		if (stack_a->size == 2)
-		{
-			ft_printf("Stack needs sorting. Applying sort_two...\n");
 			sort_two(stack_a);
-		}
 		else if (stack_a->size == 3)
-		{
-			ft_printf("Stack needs sorting. Applying sort_three...\n");
 			sort_three(stack_a);
-		}
+		else if (stack_a->size == 4)
+			sort_four(stack_a, stack_b);
 		else
-		{
-			ft_printf("Stack size %d not yet supported.\n", stack_a->size);
-		}
-		
-		// Show result after sorting
-		if (stack_a->size <= 3)
-		{
-			ft_printf("After sorting:\n");
-			print_stacks(stack_a, stack_b);
-		}
+			sort_large(stack_a, stack_b);
 	}
-	
-	// Print operation count
-	print_operation_count();
 	
 	// Uncomment to enable interactive mode for testing
 	// interactive_mode(stack_a, stack_b);
