@@ -20,6 +20,7 @@ int		populate_stack_a(t_stack *stack_a, char **numbers);
 void	print_stacks(t_stack *stack_a, t_stack *stack_b);
 int		get_min_position(t_stack *stack);
 void	move_index_to_top(t_stack *stack, int index, char stack_name);
+char	*reconstruct_args(int argc, char **argv);
 
 /* Operation counter functions */
 extern int	g_operation_count;
