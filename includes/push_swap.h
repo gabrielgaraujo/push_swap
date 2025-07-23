@@ -19,6 +19,7 @@ void	free_stack(t_stack *stack);
 int		populate_stack_a(t_stack *stack_a, char **numbers);
 void	print_stacks(t_stack *stack_a, t_stack *stack_b);
 int		get_min_position(t_stack *stack);
+void	move_index_to_top(t_stack *stack, int index, char stack_name);
 
 /* Operation counter functions */
 extern int	g_operation_count;
@@ -47,5 +48,6 @@ void	interactive_mode(t_stack *stack_a, t_stack *stack_b);
 int		is_sorted(t_stack *stack_a);
 void	sort_two(t_stack *stack_a);
 void	sort_three(t_stack *stack_a);
+void	sort_large(t_stack *stack_a, t_stack *stack_b);
 
 #endif

@@ -141,4 +141,44 @@ int	get_min_position(t_stack *stack)
 	return (min_position);
 }
 
+/* Move element at given index to top using least operations */
+void	move_index_to_top(t_stack *stack, int index, char stack_name)
+{
+	int	moves_up;
+	int	moves_down;
+
+	if (index < 0 || index >= stack->size)
+		return;
+	
+	// Calculate moves needed in each direction
+	moves_up = stack->size - index;     // rotations needed (ra/rb)
+	moves_down = index;                 // reverse rotations needed (rra/rrb)
+	
+	// Choose the most efficient direction
+	if (moves_up <= moves_down)
+	{
+		// Use rotate up (ra/rb)
+		while (moves_up > 0)
+		{
+			if (stack_name == 'a')
+				ra(stack);
+			else
+				rb(stack);
+			moves_up--;
+		}
+	}
+	else
+	{
+		// Use rotate down (rra/rrb)
+		while (moves_down > 0)
+		{
+			if (stack_name == 'a')
+				rra(stack);
+			else
+				rrb(stack);
+			moves_down--;
+		}
+	}
+}
+
 
