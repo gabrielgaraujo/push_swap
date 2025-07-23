@@ -3,18 +3,28 @@
 int	main(int argc, char **argv)
 {
 	char	**numbers;
+	char	*args_string;
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 	int		i;
 	int		num_count;
 
-	if (argc != 2)
+	if (argc < 2)
 	{
 		write(2, "Error\n", 6);
 		return (1);
 	}
 	
-	numbers = ft_split(argv[1], ' ');
+	// Reconstruct arguments into a single string
+	args_string = reconstruct_args(argc, argv);
+	if (!args_string)
+	{
+		write(2, "Error\n", 6);
+		return (1);
+	}
+	
+	numbers = ft_split(args_string, ' ');
+	free(args_string);  // Free the reconstructed string
 	if (!numbers)
 	{
 		write(2, "Error\n", 6);
