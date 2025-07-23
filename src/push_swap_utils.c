@@ -178,39 +178,6 @@ void	move_index_to_top(t_stack *stack, int index, char stack_name)
 	}
 }
 
-/* Reconstruct command line arguments into a single string */
-char	*reconstruct_args(int argc, char **argv)
-{
-	char	*result;
-	char	*temp;
-	int		i;
-
-	if (argc < 2)
-		return (NULL);
-	
-	// Start with the first argument
-	result = ft_strdup(argv[1]);
-	if (!result)
-		return (NULL);
-	
-	// Join remaining arguments with spaces
-	i = 2;
-	while (i < argc)
-	{
-		temp = ft_strjoin(result, " ");
-		free(result);
-		if (!temp)
-			return (NULL);
-		result = ft_strjoin(temp, argv[i]);
-		free(temp);
-		if (!result)
-			return (NULL);
-		i++;
-	}
-	
-	return (result);
-}
-
 int	validate_input(char *input)
 {
 	if (!input) 
