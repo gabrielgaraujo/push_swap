@@ -16,7 +16,7 @@ typedef struct s_stack
 int		count_numbers(char **numbers);
 t_stack	*init_stack(int capacity);
 void	free_stack(t_stack *stack);
-int		populate_stack_a(t_stack *stack_a, char **numbers);
+int		populate_stack_a(int argc, char **argv, t_stack *stack_a);
 void	print_stacks(t_stack *stack_a, t_stack *stack_b);
 int		get_min_position(t_stack *stack);
 void	move_index_to_top(t_stack *stack, int index, char stack_name);
