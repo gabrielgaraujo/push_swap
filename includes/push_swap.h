@@ -18,6 +18,7 @@ t_stack	*init_stack(int capacity);
 void	free_stack(t_stack *stack);
 int		populate_stack_a(t_stack *stack_a, char **numbers);
 void	print_stacks(t_stack *stack_a, t_stack *stack_b);
+int		get_min_position(t_stack *stack);
 
 /* Operation counter functions */
 extern int	g_operation_count;

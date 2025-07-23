@@ -113,3 +113,32 @@ void	print_operation_count(void)
 {
 	ft_printf("Total operations performed: %d\n", g_operation_count);
 }
+
+/* Get the position of the smallest value in the stack */
+int	get_min_position(t_stack *stack)
+{
+	int	min_value;
+	int	min_position;
+	int	i;
+
+	if (stack->size == 0)
+		return (-1);
+	
+	min_value = stack->data[0];
+	min_position = 0;
+	
+	i = 1;
+	while (i < stack->size)
+	{
+		if (stack->data[i] < min_value)
+		{
+			min_value = stack->data[i];
+			min_position = i;
+		}
+		i++;
+	}
+	
+	return (min_position);
+}
+
+
