@@ -22,6 +22,12 @@ int		get_min_position(t_stack *stack);
 void	move_index_to_top(t_stack *stack, int index, char stack_name);
 char	*reconstruct_args(int argc, char **argv);
 
+/* debugging functions */
+extern t_stack *g_debug_stack_a;
+extern t_stack *g_debug_stack_b;
+void	debug_print_stacks(void);
+void	debug_update_and_print(t_stack *stack_a, t_stack *stack_b);
+
 /* Operation counter functions */
 extern int	g_operation_count;
 void	reset_operation_count(void);

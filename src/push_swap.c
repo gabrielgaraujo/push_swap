@@ -59,6 +59,8 @@ int	main(int argc, char **argv)
 	
 	// Reset operation counter
 	reset_operation_count();
+	g_debug_stack_a = stack_a;  // For debugging
+	g_debug_stack_b = stack_b;  // For debugging
 	
 	// Check if already sorted first
 	if (!is_sorted(stack_a))
