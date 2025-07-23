@@ -45,17 +45,13 @@ int	populate_stack_a(t_stack *stack_a, char **numbers)
 {
 	int	i;
 	int	num;
-	int	count;
 
-	// Count total numbers first
-	count = count_numbers(numbers);
-	
-	// Populate in reverse order so first input number is at top of stack
+	// Populate in regular order
 	i = 0;
 	while (numbers[i])
 	{
 		num = ft_atoi(numbers[i]);
-		stack_a->data[count - 1 - i] = num;  // Store in reverse order
+		stack_a->data[i] = num;  // Store in regular order
 		stack_a->size++;
 		i++;
 	}
@@ -209,6 +205,10 @@ char	*reconstruct_args(int argc, char **argv)
 		if (!result)
 			return (NULL);
 		i++;
+	}
+	
+	return (result);
+}
 	}
 	
 	return (result);
