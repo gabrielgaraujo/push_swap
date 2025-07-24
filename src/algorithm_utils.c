@@ -109,3 +109,20 @@ int	can_dual_swap(t_stack *stack_a, t_stack *stack_b)
     
     return (a_benefit && b_benefit);
 }
+
+/* Check if dual reverse rotation benefits both stacks */
+int	can_dual_reverse_rotate(t_stack *stack_a, t_stack *stack_b)
+{
+    int	a_benefit, b_benefit;
+    
+    if (stack_a->size < 2 || stack_b->size < 2)
+        return (0);
+    
+    // Check if reverse rotating A improves sorting (last element comes to top)
+    a_benefit = (stack_a->data[stack_a->size - 1] < stack_a->data[0]);
+    
+    // Check if reverse rotating B improves sorting (last element comes to top)
+    b_benefit = (stack_b->data[stack_b->size - 1] > stack_b->data[0]);
+    
+    return (a_benefit && b_benefit);
+}
