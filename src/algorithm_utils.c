@@ -126,3 +126,41 @@ int	can_dual_reverse_rotate(t_stack *stack_a, t_stack *stack_b)
     
     return (a_benefit && b_benefit);
 }
+
+/* Perform single stack operations when dual operations don't help */
+int	single_stack_operations(t_stack *stack_a, t_stack *stack_b)
+{
+    int	operations = 0;
+    
+    // Optimize stack A (ascending)
+    if (!is_sorted_ascending(stack_a))
+    {
+        if (stack_a->size >= 2 && stack_a->data[0] > stack_a->data[1])
+        {
+            sa(stack_a);
+            operations++;
+        }
+        else if (stack_a->size >= 2)
+        {
+            ra(stack_a);
+            operations++;
+        }
+    }
+    
+    // Optimize stack B (descending)
+    if (!is_sorted_descending(stack_b))
+    {
+        if (stack_b->size >= 2 && stack_b->data[0] < stack_b->data[1])
+        {
+            sb(stack_b);
+            operations++;
+        }
+        else if (stack_b->size >= 2)
+        {
+            rb(stack_b);
+            operations++;
+        }
+    }
+    
+    return (operations);
+}
