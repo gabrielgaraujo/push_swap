@@ -21,7 +21,13 @@ void	print_stacks(t_stack *stack_a, t_stack *stack_b);
 int		get_min_position(t_stack *stack);
 int		get_max_position(t_stack *stack);
 void	move_index_to_top(t_stack *stack, int index, char stack_name);
-char	*reconstruct_args(int argc, char **argv);
+
+/* Input validation */
+int		validate_input(int argc, char **argv);
+int		find_duplicates(int argc, char **argv);
+int		find_overflow(int argc, char **argv);
+int		find_non_int(int argc, char **argv);
+long	ft_atol(const char *str);
 
 /* debugging functions */
 extern t_stack *g_debug_stack_a;
@@ -48,9 +54,6 @@ void	rr(t_stack *stack_a, t_stack *stack_b);
 void	rra(t_stack *stack_a);
 void	rrb(t_stack *stack_b);
 void	rrr(t_stack *stack_a, t_stack *stack_b);
-
-/* Interactive mode */
-void	interactive_mode(t_stack *stack_a, t_stack *stack_b);
 
 /* Algorithm functions */
 int		is_sorted(t_stack *stack_a);
