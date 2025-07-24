@@ -66,7 +66,7 @@ void	dual_bubble_sort(t_stack *stack_a, t_stack *stack_b)
         }
         
         // If both stacks are sorted, break
-        if (is_sorted_ascending(stack_a) && is_sorted_descending(stack_b))
+        if (is_sorted(stack_a) && is_sorted_descending(stack_b))
             break;
         
         if (!swapped)
@@ -157,7 +157,7 @@ int	single_stack_operations(t_stack *stack_a, t_stack *stack_b)
     int	operations = 0;
     
     // Optimize stack A (ascending)
-    if (!is_sorted_ascending(stack_a))
+    if (!is_sorted(stack_a))
     {
         if (stack_a->size >= 2 && stack_a->data[0] > stack_a->data[1])
         {
@@ -205,4 +205,46 @@ int	is_sorted_descending(t_stack *stack)
         i++;
     }
     return (1);
+}
+
+/* Helper: Find median value in stack */
+int	find_median(t_stack *stack)
+{
+    int	*sorted_array;
+    int	median;
+    int	i, j, temp;
+    
+    sorted_array = malloc(sizeof(int) * stack->size);
+    if (!sorted_array)
+        return (0);
+    
+    // Copy values
+    i = 0;
+    while (i < stack->size)
+    {
+        sorted_array[i] = stack->data[i];
+        i++;
+    }
+    
+    // Simple bubble sort
+    i = 0;
+    while (i < stack->size - 1)
+    {
+        j = 0;
+        while (j < stack->size - 1 - i)
+        {
+            if (sorted_array[j] > sorted_array[j + 1])
+            {
+                temp = sorted_array[j];
+                sorted_array[j] = sorted_array[j + 1];
+                sorted_array[j + 1] = temp;
+            }
+            j++;
+        }
+        i++;
+    }
+    
+    median = sorted_array[stack->size / 2];
+    free(sorted_array);
+    return (median);
 }
