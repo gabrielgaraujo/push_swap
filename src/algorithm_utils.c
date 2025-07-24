@@ -33,11 +33,11 @@ void	split_stack_optimally(t_stack *stack_a, t_stack *stack_b)
 void	dual_bubble_sort(t_stack *stack_a, t_stack *stack_b)
 {
     int	swapped;
-    int	pass;
+    int	i;
     
     // Sort stack A (ascending) and stack B (descending) simultaneously
-    pass = 0;
-    while (pass < stack_a->size + stack_b->size)
+    i = 0;
+    while (i < stack_a->size + stack_b->size)
     {
         swapped = 0;
         
@@ -72,6 +72,23 @@ void	dual_bubble_sort(t_stack *stack_a, t_stack *stack_b)
         if (!swapped)
             break;
         
-        pass++;
+        i++;
     }
+}
+
+/* Check if dual rotation benefits both stacks */
+int	can_dual_rotate(t_stack *stack_a, t_stack *stack_b)
+{
+    int	a_benefit, b_benefit;
+    
+    if (stack_a->size < 2 || stack_b->size < 2)
+        return (0);
+    
+    // Check if rotating A improves sorting (ascending)
+    a_benefit = (stack_a->data[1] < stack_a->data[0]);
+    
+    // Check if rotating B improves sorting (descending)  
+    b_benefit = (stack_b->data[1] > stack_b->data[0]);
+    
+    return (a_benefit && b_benefit);
 }
