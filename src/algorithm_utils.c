@@ -92,3 +92,20 @@ int	can_dual_rotate(t_stack *stack_a, t_stack *stack_b)
     
     return (a_benefit && b_benefit);
 }
+
+/* Check if dual swap benefits both stacks */
+int	can_dual_swap(t_stack *stack_a, t_stack *stack_b)
+{
+    int	a_benefit, b_benefit;
+    
+    if (stack_a->size < 2 || stack_b->size < 2)
+        return (0);
+    
+    // Check if swapping A improves sorting (ascending)
+    a_benefit = (stack_a->data[0] > stack_a->data[1]);
+    
+    // Check if swapping B improves sorting (descending)
+    b_benefit = (stack_b->data[0] < stack_b->data[1]);
+    
+    return (a_benefit && b_benefit);
+}
