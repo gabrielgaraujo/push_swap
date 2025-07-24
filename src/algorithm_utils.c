@@ -1,4 +1,4 @@
-#include "push_swap.h"
+#include "../includes/push_swap.h"
 
 /* Split stack A into two halves - smaller values to B, larger to A */
 void	split_stack_optimally(t_stack *stack_a, t_stack *stack_b)
@@ -247,4 +247,25 @@ int	find_median(t_stack *stack)
     median = sorted_array[stack->size / 2];
     free(sorted_array);
     return (median);
+}
+
+/* Helper: Find where a value should be inserted in sorted stack A */
+int	find_insertion_position(t_stack *stack_a, int value)
+{
+    int	i;
+    
+    if (stack_a->size == 0)
+        return (0);
+    
+    // Find the position where value should be inserted to maintain order
+    i = 0;
+    while (i < stack_a->size)
+    {
+        if (stack_a->data[i] > value)
+            return (i);
+        i++;
+    }
+    
+    // If value is larger than all elements, insert at end
+    return (stack_a->size);
 }

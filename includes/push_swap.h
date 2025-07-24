@@ -62,4 +62,16 @@ void	sort_three(t_stack *stack_a);
 void	sort_four(t_stack *stack_a, t_stack *stack_b);
 void	sort_large(t_stack *stack_a, t_stack *stack_b);
 
+/* Large stack algorithm functions */
+void	split_stack_optimally(t_stack *stack_a, t_stack *stack_b);
+void	dual_bubble_sort(t_stack *stack_a, t_stack *stack_b);
+void	merge_sorted_stacks(t_stack *stack_a, t_stack *stack_b);
+int		can_dual_rotate(t_stack *stack_a, t_stack *stack_b);
+int		can_dual_swap(t_stack *stack_a, t_stack *stack_b);
+int		can_dual_reverse_rotate(t_stack *stack_a, t_stack *stack_b);
+int		single_stack_operations(t_stack *stack_a, t_stack *stack_b);
+int		is_sorted_descending(t_stack *stack);
+int		find_median(t_stack *stack);
+int		find_insertion_position(t_stack *stack_a, int value);
+
 #endif
