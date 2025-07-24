@@ -1,4 +1,4 @@
-#include "../includes/push_swap.h"
+#include "push_swap.h"
 
 /* Split stack A into two halves - smaller values to B, larger to A */
 void	split_stack_optimally(t_stack *stack_a, t_stack *stack_b)
@@ -32,44 +32,46 @@ void	split_stack_optimally(t_stack *stack_a, t_stack *stack_b)
 /* Sort both stacks simultaneously using dual operations when possible */
 void	dual_bubble_sort(t_stack *stack_a, t_stack *stack_b)
 {
-    int	swapped;
+    int	max_iterations;
     int	i;
+    int	progress_made;
     
-    // Sort stack A (ascending) and stack B (descending) simultaneously
+    // More aggressive iteration limit for thorough sorting
+    max_iterations = (stack_a->size + stack_b->size) * 4;
+    
     i = 0;
-    while (i < stack_a->size + stack_b->size)
+    while (i < max_iterations)
     {
-        swapped = 0;
+        progress_made = 0;
         
-        // Try dual rotation first
-        if (can_dual_rotate(stack_a, stack_b))
-        {
-            rr(stack_a, stack_b);
-            swapped = 1;
-        }
-        // Try dual swap
-        else if (can_dual_swap(stack_a, stack_b))
+        // Prioritize dual operations - they're more efficient
+        if (can_dual_swap(stack_a, stack_b))
         {
             ss(stack_a, stack_b);
-            swapped = 1;
+            progress_made = 1;
         }
-        // Try dual reverse rotation
+        else if (can_dual_rotate(stack_a, stack_b))
+        {
+            rr(stack_a, stack_b);
+            progress_made = 1;
+        }
         else if (can_dual_reverse_rotate(stack_a, stack_b))
         {
             rrr(stack_a, stack_b);
-            swapped = 1;
+            progress_made = 1;
         }
-        // Individual operations
         else
         {
-            swapped += single_stack_operations(stack_a, stack_b);
+            // Individual operations when dual operations don't apply
+            progress_made = single_stack_operations(stack_a, stack_b);
         }
         
-        // If both stacks are sorted, break
+        // Check if both stacks are optimally sorted
         if (is_sorted(stack_a) && is_sorted_descending(stack_b))
             break;
         
-        if (!swapped)
+        // If no progress, break to avoid infinite loops
+        if (!progress_made)
             break;
         
         i++;
@@ -79,17 +81,32 @@ void	dual_bubble_sort(t_stack *stack_a, t_stack *stack_b)
 /* Merge two sorted stacks back together */
 void	merge_sorted_stacks(t_stack *stack_a, t_stack *stack_b)
 {
-    // Since A is ascending and B is descending,
-    // B's top element is the largest value in B
-    // We want to merge them to make A fully sorted ascending
-    
+    // Merge elements from B back to A in optimal positions
     while (stack_b->size > 0)
     {
         // Find where B's top element belongs in A
         int target_pos = find_insertion_position(stack_a, stack_b->data[0]);
         
-        // Move target position to top of A
-        move_index_to_top(stack_a, target_pos, 'a');
+        // Move target position to top of A efficiently
+        if (target_pos <= stack_a->size / 2)
+        {
+            // Rotate forward to bring target position to top
+            while (target_pos > 0)
+            {
+                ra(stack_a);
+                target_pos--;
+            }
+        }
+        else
+        {
+            // Rotate backward to bring target position to top
+            int rotations = stack_a->size - target_pos;
+            while (rotations > 0)
+            {
+                rra(stack_a);
+                rotations--;
+            }
+        }
         
         // Push from B to A
         pa(stack_a, stack_b);
@@ -97,7 +114,28 @@ void	merge_sorted_stacks(t_stack *stack_a, t_stack *stack_b)
     
     // Final optimization: ensure minimum is at top
     int min_pos = get_min_position(stack_a);
-    move_index_to_top(stack_a, min_pos, 'a');
+    if (min_pos == 0)
+        return; // Already optimal
+        
+    if (min_pos <= stack_a->size / 2)
+    {
+        // Rotate forward to bring minimum to top
+        while (min_pos > 0)
+        {
+            ra(stack_a);
+            min_pos--;
+        }
+    }
+    else
+    {
+        // Rotate backward to bring minimum to top
+        int rotations = stack_a->size - min_pos;
+        while (rotations > 0)
+        {
+            rra(stack_a);
+            rotations--;
+        }
+    }
 }
 
 /* Check if dual rotation benefits both stacks */
@@ -155,34 +193,97 @@ int	can_dual_reverse_rotate(t_stack *stack_a, t_stack *stack_b)
 int	single_stack_operations(t_stack *stack_a, t_stack *stack_b)
 {
     int	operations = 0;
+    int	best_move_found = 0;
     
-    // Optimize stack A (ascending)
-    if (!is_sorted(stack_a))
+    // Try to make the most beneficial single move for stack A (ascending)
+    if (!is_sorted(stack_a) && stack_a->size >= 2 && !best_move_found)
     {
-        if (stack_a->size >= 2 && stack_a->data[0] > stack_a->data[1])
+        // Priority 1: Simple swap if it helps immediately
+        if (stack_a->data[0] > stack_a->data[1])
         {
-            sa(stack_a);
-            operations++;
+            // Check if swap actually improves the overall order
+            int improvements = 0;
+            if (stack_a->size >= 3 && stack_a->data[1] < stack_a->data[2])
+                improvements++;
+            if (improvements > 0 || stack_a->size == 2)
+            {
+                sa(stack_a);
+                operations++;
+                best_move_found = 1;
+            }
         }
-        else if (stack_a->size >= 2)
+        
+        // Priority 2: Reverse rotate if bottom element fits better at top
+        if (!best_move_found && stack_a->size >= 3)
         {
-            ra(stack_a);
-            operations++;
+            int bottom = stack_a->data[stack_a->size - 1];
+            int top = stack_a->data[0];
+            // Only reverse rotate if bottom element is significantly smaller
+            if (bottom < top && (stack_a->size <= 3 || bottom < stack_a->data[1]))
+            {
+                rra(stack_a);
+                operations++;
+                best_move_found = 1;
+            }
+        }
+        
+        // Priority 3: Regular rotate (but be more selective)
+        if (!best_move_found && stack_a->size >= 3)
+        {
+            // Only rotate if it brings a smaller element towards the front
+            int second = stack_a->data[1];
+            if (second < stack_a->data[0])
+            {
+                ra(stack_a);
+                operations++;
+                best_move_found = 1;
+            }
         }
     }
     
-    // Optimize stack B (descending)
-    if (!is_sorted_descending(stack_b))
+    // Try to make the most beneficial single move for stack B (descending)
+    if (!is_sorted_descending(stack_b) && stack_b->size >= 2 && !best_move_found)
     {
-        if (stack_b->size >= 2 && stack_b->data[0] < stack_b->data[1])
+        // Priority 1: Simple swap if it helps immediately
+        if (stack_b->data[0] < stack_b->data[1])
         {
-            sb(stack_b);
-            operations++;
+            // Check if swap actually improves the overall order
+            int improvements = 0;
+            if (stack_b->size >= 3 && stack_b->data[1] > stack_b->data[2])
+                improvements++;
+            if (improvements > 0 || stack_b->size == 2)
+            {
+                sb(stack_b);
+                operations++;
+                best_move_found = 1;
+            }
         }
-        else if (stack_b->size >= 2)
+        
+        // Priority 2: Reverse rotate if bottom element fits better at top
+        if (!best_move_found && stack_b->size >= 3)
         {
-            rb(stack_b);
-            operations++;
+            int bottom = stack_b->data[stack_b->size - 1];
+            int top = stack_b->data[0];
+            // Only reverse rotate if bottom element is significantly larger
+            if (bottom > top && (stack_b->size <= 3 || bottom > stack_b->data[1]))
+            {
+                rrb(stack_b);
+                operations++;
+                best_move_found = 1;
+            }
+        }
+        
+        // Priority 3: Regular rotate (but be more selective)
+        if (!best_move_found && stack_b->size >= 3)
+        {
+            // Only rotate if it brings a larger element towards the front
+            int second = stack_b->data[1];
+            if (second > stack_b->data[0])
+            {
+                rb(stack_b);
+                operations++;
+                best_move_found = 1;
+            }
         }
     }
     
