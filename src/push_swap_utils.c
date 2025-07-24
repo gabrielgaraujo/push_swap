@@ -136,6 +136,33 @@ int	get_min_position(t_stack *stack)
 	return (min_position);
 }
 
+/* Get the position of the greatest value in the stack */
+int	get_max_position(t_stack *stack)
+{
+	int	max_value;
+	int	max_position;
+	int	i;
+
+	if (stack->size == 0)
+		return (-1);
+	
+	max_value = stack->data[0];  // Start from top of stack (data[0])
+	max_position = 0;
+	
+	i = 1;
+	while (i < stack->size)
+	{
+		if (stack->data[i] > max_value)
+		{
+			max_value = stack->data[i];
+			max_position = i;
+		}
+		i++;
+	}
+	
+	return (max_position);
+}
+
 /* Move element at given index to top using least operations */
 void	move_index_to_top(t_stack *stack, int index, char stack_name)
 {
