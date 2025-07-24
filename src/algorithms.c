@@ -112,10 +112,18 @@ void	sort_four(t_stack *stack_a, t_stack *stack_b)
 	}
 }
 
-/* General sorting algorithm for 5+ elements (placeholder) */
+/* General sorting algorithm for 5+ elements */
 void	sort_large(t_stack *stack_a, t_stack *stack_b)
 {
-	(void)stack_a;
-	(void)stack_b;
-	// TODO: Implement sorting algorithm for large stacks
+    if (stack_a->size <= 4)
+        return;
+    
+    // Phase 1: Split into two roughly equal halves
+    split_stack_optimally(stack_a, stack_b);
+    
+    // Phase 2: Sort both stacks simultaneously using dual operations
+    dual_bubble_sort(stack_a, stack_b);
+    
+    // Phase 3: Merge sorted stacks back together
+    merge_sorted_stacks(stack_a, stack_b);
 }
