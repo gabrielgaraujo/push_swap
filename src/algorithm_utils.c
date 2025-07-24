@@ -76,6 +76,30 @@ void	dual_bubble_sort(t_stack *stack_a, t_stack *stack_b)
     }
 }
 
+/* Merge two sorted stacks back together */
+void	merge_sorted_stacks(t_stack *stack_a, t_stack *stack_b)
+{
+    // Since A is ascending and B is descending,
+    // B's top element is the largest value in B
+    // We want to merge them to make A fully sorted ascending
+    
+    while (stack_b->size > 0)
+    {
+        // Find where B's top element belongs in A
+        int target_pos = find_insertion_position(stack_a, stack_b->data[0]);
+        
+        // Move target position to top of A
+        move_index_to_top(stack_a, target_pos, 'a');
+        
+        // Push from B to A
+        pa(stack_a, stack_b);
+    }
+    
+    // Final optimization: ensure minimum is at top
+    int min_pos = get_min_position(stack_a);
+    move_index_to_top(stack_a, min_pos, 'a');
+}
+
 /* Check if dual rotation benefits both stacks */
 int	can_dual_rotate(t_stack *stack_a, t_stack *stack_b)
 {
