@@ -1,9 +1,9 @@
 #include "../includes/push_swap.h"
 
-int	main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-	t_stack	*stack_a;
-	t_stack	*stack_b;
+	t_stack *stack_a;
+	t_stack *stack_b;
 
 	if (argc == 1)
 		return (0);
@@ -32,11 +32,11 @@ int	main(int argc, char **argv)
 
 	// Reset operation counter
 	reset_operation_count();
-	
+
 	// Set global debug stacks for operations debug printing
 	g_debug_stack_a = stack_a;
 	g_debug_stack_b = stack_b;
-	
+
 	// Check if already sorted first
 	if (!is_sorted(stack_a))
 	{
@@ -50,11 +50,19 @@ int	main(int argc, char **argv)
 		else
 			sort_large(stack_a, stack_b);
 	}
+	print_operation_count();
+	if (is_sorted(stack_a))
+	{
+		ft_printf("Stack A is sorted.\n");
+	}
+	else
+	{
+		ft_printf("Stack A is not sorted.\n");
+	}
 
 	// Clean up
 	free_stack(stack_a);
 	free_stack(stack_b);
-	
+
 	return (0);
 }
-
