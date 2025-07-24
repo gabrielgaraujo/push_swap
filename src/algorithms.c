@@ -78,23 +78,38 @@ void	sort_three(t_stack *stack_a)
 void	sort_four(t_stack *stack_a, t_stack *stack_b)
 {
 	int	min_pos;
+	int max_pos;
 
-	if (stack_a->size != 4)
-		return;
+	if (stack_a->size != 4) return;
 	
-	// Find position of minimum value and move it to top
 	min_pos = get_min_position(stack_a);
-	move_index_to_top(stack_a, min_pos, 'a');
+	max_pos = get_max_position(stack_a);
 	
-	// Push minimum to stack B
-	pb(stack_a, stack_b);
-	
-	// Sort remaining 3 elements in stack A
-	if (!is_sorted(stack_a))
+	// Handle special cases
+	if (min_pos == 1 && max_pos == 3 && stack_a->data[0] < stack_a->data[2])
+	{
+		// Pattern [b, a, c, d]
+		sa(stack_a);
+	} else if (min_pos == 3 && max_pos == 2 && stack_a->data[0] < stack_a->data[1])
+	{
+		// Pattern [b, c, d, a]
+		rra(stack_a);
+	} else if (min_pos == 1 && max_pos == 0 && stack_a->data[2] < stack_a->data[3]) 
+	{
+		// Pattern [d, a, b, c]
+		ra(stack_a);
+	} else if (min_pos == 2 && max_pos == 1 && stack_a->data[3] < stack_a->data[0])
+	{
+		// Pattern [c, d, a, b]
+		ra(stack_a);
+		ra(stack_a);
+	} else {
+		// General case:
+		move_index_to_top(stack_a, min_pos, 'a');
+		pb(stack_a, stack_b);
 		sort_three(stack_a);
-	
-	// Push minimum back to stack A (it will be at the top, which is correct)
-	pa(stack_a, stack_b);
+		pa(stack_a, stack_b);
+	}
 }
 
 /* General sorting algorithm for 5+ elements (placeholder) */
